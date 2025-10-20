@@ -1,0 +1,31 @@
+name: CI Pipeline - Teste e Linter
+
+on:
+  push:
+    branches: [ main ] 
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 1. Clonar o repositório
+      uses: actions/checkout@v3
+
+    - name: 2. Configurar o Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 3. Instalar dependências
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: 4. Rodar análise estática com Pylint
+      run: |
+        # Vai checar todos os arquivos .py no repositório
+        pylint *.py 
+
+    - name: 5. Rodar os testes com pytest
+      run: |
+        pytest
