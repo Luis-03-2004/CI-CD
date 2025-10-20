@@ -11,3 +11,10 @@ def test_read_root():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "Hello World!"}
+
+def test_read_hello_name():
+    """Testa o endpoint de saudação personalizada."""
+    name_to_test = "John"
+    response = client.get(f"/hello/{name_to_test}")
+    assert response.status_code == 200
+    assert response.json() == {"message": f"Hello, {name_to_test}"}
